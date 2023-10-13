@@ -149,20 +149,22 @@ class TicTacToe():
     def play_game(self):
         while not self.terminal_node(self.state)["gameover"]:
             self.display_board()
-            if self.isMaxPlayer:  
+            if self.isMaxPlayer: 
                 print("Computer's move:")
                 self.computer_move()
+                self.isMaxPlayer = not self.isMaxPlayer 
             else:
                 move_made = False
                 while not move_made:
                     row = input("Enter row (0, 1, or 2): ")
                     col = input("Enter col (0, 1, or 2): ")
-                    if row.isdigit() and col.isdigit(): 
+                    if row.isdigit() and col.isdigit():  
                         move_made = self.make_move(int(row), int(col), -1)
+                        if move_made:
+                            self.isMaxPlayer = not self.isMaxPlayer  
                     if not move_made:
                         print("Invalid move. Please try again.")
                     
-        self.isMaxPlayer = not self.isMaxPlayer
         self.display_board()
         result = self.terminal_node(self.state)["result"]
         if result == 10:
@@ -171,6 +173,7 @@ class TicTacToe():
             print("You win!")
         else:
             print("It's a tie!")
+
 game = TicTacToe()
 game.play_game()
 
