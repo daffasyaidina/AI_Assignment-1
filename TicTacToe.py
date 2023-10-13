@@ -46,19 +46,15 @@ class TicTacToe():
             return minEval
 
     def terminal_node(self, state):
-        # result of the game
-        # win1 = +10, win2 = -10, tie=0
         result = 0
         isGameOver = False
     
-        # check if there is an empty cell
         emptyCells = False
         for i in range(3):
             for j in range(3):
                 if state[i][j] == 0:
                     emptyCells = True
 
-        # check rows if there is a winner
         isWinner = False
         for i in range(3):
             sum_p1 = 0
@@ -75,7 +71,6 @@ class TicTacToe():
                 if (sum_p2 == -3):
                     result = -10
 
-        # check cols if there is a winner
         for j in range(3):
             sum_p1 = 0
             sum_p2 = 0
@@ -91,7 +86,6 @@ class TicTacToe():
                 if (sum_p2 == -3):
                     result = -10
 
-        # check diagonals if there is a winner
         sum_p1 = 0
         sum_p2 = 0
         for i in range(3):
@@ -135,7 +129,7 @@ class TicTacToe():
     def computer_move(self):
         best_move = None
         best_value = -math.inf
-        depth = len(self.expand_state(self.state))  # Dynamic depth based on empty cells
+        depth = len(self.expand_state(self.state))  
         
         for pos in self.expand_state(self.state):
             temp_state = copy.deepcopy(self.state)
@@ -155,7 +149,7 @@ class TicTacToe():
     def play_game(self):
         while not self.terminal_node(self.state)["gameover"]:
             self.display_board()
-            if self.isMaxPlayer:  # Assuming the computer is the maximizing player
+            if self.isMaxPlayer:  
                 print("Computer's move:")
                 self.computer_move()
             else:
@@ -163,13 +157,12 @@ class TicTacToe():
                 while not move_made:
                     row = input("Enter row (0, 1, or 2): ")
                     col = input("Enter col (0, 1, or 2): ")
-                    if row.isdigit() and col.isdigit():  # Validate user input
+                    if row.isdigit() and col.isdigit(): 
                         move_made = self.make_move(int(row), int(col), -1)
                     if not move_made:
                         print("Invalid move. Please try again.")
                     
         self.isMaxPlayer = not self.isMaxPlayer
-        # Display the final state and announce the result
         self.display_board()
         result = self.terminal_node(self.state)["result"]
         if result == 10:
